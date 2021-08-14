@@ -14,8 +14,10 @@ music = pg.mixer.music.load('KIDS.mp3')
 stoneImg = pg.image.load('stone.png')
 stoneX = 380
 stoneY = 400
-stoneX_change = 0       # изменяя численное значение этого параметра можно влиять на скорость и направление перемещения
+stoneX_change = 0  # изменяя численное значение этого параметра можно влиять на скорость и направление перемещения
 stoneY_change = 0
+
+
 # поменять фон
 # добавить врага камня
 
@@ -35,21 +37,20 @@ while running:
             # какое конкретно событие произошло
             running = False
         if event.type == KEYDOWN:
-            print('Клавиша нажата')
-            if event.key == K_LEFT: # можно было выбрать любые другие клавиши
+            # print('Клавиша нажата')
+            if event.key == K_LEFT:  # можно было выбрать любые другие клавиши
                 stoneX_change = -2  # когда будет зажата и удерживаться левая стрелка
             if event.key == K_RIGHT:
-                stoneX_change = 2   # когда будет зажата и удерживаться правая стрелка
+                stoneX_change = 2  # когда будет зажата и удерживаться правая стрелка
         if event.type == KEYUP:
             if event.key == K_LEFT or event.key == K_RIGHT:
                 stoneX_change = 0
 
-
-    stoneX += stoneX_change        # координата камня будет меняться когда будет зажата какая-то из стрелок
+    stoneX += stoneX_change  # координата камня будет меняться когда будет зажата какая-то из стрелок
     stoneY += stoneY_change
     if stoneX <= 0:
         stoneX = 0
-    if stoneX >= DISPLAYWIDTH - STONEWIDTH:        # при помощи этого выражения мы делаем так чтобы самая правая
+    if stoneX >= DISPLAYWIDTH - STONEWIDTH:  # при помощи этого выражения мы делаем так чтобы самая правая
         # граница камня не могла заехать за границу окна
         stoneX = DISPLAYWIDTH - STONEWIDTH
     stone(stoneX, stoneY)

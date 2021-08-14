@@ -12,10 +12,11 @@ screen = pg.display.set_mode((800, 600))
 background = pg.image.load('background.jpg')
 music = pg.mixer.music.load('KIDS.mp3')
 stoneImg = pg.image.load('stone.png')
+enemyImg = pg.image.load('enemy.png')
 stoneX = 380
 stoneY = 315
 stoneX_change = 0  # изменяя численное значение этого параметра можно влиять на скорость и направление перемещения
-stoneY_change = 0
+
 
 
 # поменять фон
@@ -47,7 +48,6 @@ while running:
                 stoneX_change = 0
 
     stoneX += stoneX_change  # координата камня будет меняться когда будет зажата какая-то из стрелок
-    stoneY += stoneY_change
     if stoneX <= 0:
         stoneX = 0
     if stoneX >= DISPLAYWIDTH - STONEWIDTH:  # при помощи этого выражения мы делаем так чтобы самая правая

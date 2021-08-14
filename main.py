@@ -5,15 +5,15 @@ from pygame.locals import *  # это не особо хорошая конст�
 # при помощи конструкции from <'module_name'> import <'name'> можно импортировать конкретные функции
 # или константы, если написать from <'module_name'> import * то импортируется всё, что есть в этом модуле
 DISPLAYWIDTH = 800
-STONEWIDTH = 160
+STONEWIDTH = 106
 pg.init()
 pg.mixer.init()
 screen = pg.display.set_mode((800, 600))
-background = pg.image.load('background.jpeg')
+background = pg.image.load('background.jpg')
 music = pg.mixer.music.load('KIDS.mp3')
 stoneImg = pg.image.load('stone.png')
 stoneX = 380
-stoneY = 400
+stoneY = 315
 stoneX_change = 0  # изменяя численное значение этого параметра можно влиять на скорость и направление перемещения
 stoneY_change = 0
 

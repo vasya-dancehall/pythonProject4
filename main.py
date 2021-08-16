@@ -15,6 +15,8 @@ stoneImg = pg.image.load('stone.png')
 enemyImg = pg.image.load('enemy.png')
 stoneX = 380
 stoneY = 315
+enemyX = 0
+enemyY = 0
 stoneX_change = 0  # изменяя численное значение этого параметра можно влиять на скорость и направление перемещения
 
 

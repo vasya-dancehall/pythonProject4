@@ -1,6 +1,7 @@
 import pygame as pg  # если импортируется модуль с длинным именем то его можно сократить до псевдонима при помощи as
 import random
 from pygame.locals import *  # это не особо хорошая конструкция потому что мы не знаем точно какие имена импортировались
+import math
 
 # при помощи конструкции from <'module_name'> import <'name'> можно импортировать конкретные функции
 # или константы, если написать from <'module_name'> import * то импортируется всё, что есть в этом модуле
@@ -21,9 +22,31 @@ bullet_state = 'ready'
 stoneX = 380
 stoneY = 315
 enemyX = 0
-enemyY = 220
+enemyY = 230
 stoneX_change = 0  # изменяя численное значение этого параметра можно влиять на скорость и направление перемещения
-enemyX_change = 0.5
+enemyX_change = 2
+score_value = 0
+font = pg.font.Font('freesansbold.ttf', 32)
+textX = 10
+textY = 10
+healthX = 600
+healthY = 10
+health_score = 5
+
+
+def show_victory_message(x, y):
+    victory_message = font.render('You won!', True, (255, 255, 255))
+    screen.blit(victory_message, (x, y))
+
+
+def show_health(x, y):
+    health = font.render(f'Enemy: {health_score}', True, (255, 255, 255))
+    screen.blit(health, (x, y))
+
+
+def show_score(x, y):
+    score = font.render(f'Score: {score_value}', True, (255, 255, 255))
+    screen.blit(score, (x, y))
 
 
 def stone(x, y):
@@ -38,6 +61,15 @@ def fire_bullet(x, y):
     global bullet_state
     bullet_state = 'fire'
     screen.blit(bulletImg, (x + 16, y + 10))
+
+
+def isCollision(enemyX, enemyY, bulletX, bulletY):
+    distance = math.sqrt((enemyX - bulletX) ** 2 + (enemyY - bulletY) ** 2)
+    if distance < 27:
+        return True
+    else:
+        return False
+
 
 running = True
 while running:
@@ -74,17 +106,26 @@ while running:
         stoneX = DISPLAYWIDTH - STONEWIDTH
     if enemyX <= 0:
         enemyX = 0
-        enemyX_change = 0.5
+        enemyX_change = 2
     if enemyX >= DISPLAYWIDTH - 80:
         enemyX = DISPLAYWIDTH - 80
-        enemyX_change = -0.5
+        enemyX_change = -2
     if bulletY <= 0:
         bulletY = 315
         bullet_state = 'ready'
     if bullet_state is 'fire':
         fire_bullet(bulletX, bulletY)
         bulletY += bulletY_change
-
+    collision = isCollision(enemyX, enemyY, bulletX, bulletY)
+    if collision:
+        bulletY = 315
+        bullet_state = 'ready'
+        score_value += 1
+        health_score -= 1
+    if health_score <= 0:
+        show_victory_message(50, 100)
+    show_health(healthX, healthY)
+    show_score(textX, textY)
     stone(stoneX, stoneY)
     enemy(enemyX, enemyY)
     pg.display.update()

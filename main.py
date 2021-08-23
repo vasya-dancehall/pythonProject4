@@ -2,7 +2,7 @@ import pygame as pg  # если импортируется модуль с дл�
 import random
 from pygame.locals import *  # это не особо хорошая конструкция потому что мы не знаем точно какие имена импортировались
 import math
-
+# если рабочие файлы находятся в одной папке со скриптом то путями к этим файлам будут являться просто имена этих файлов
 # при помощи конструкции from <'module_name'> import <'name'> можно импортировать конкретные функции
 # или константы, если написать from <'module_name'> import * то импортируется всё, что есть в этом модуле
 DISPLAYWIDTH = 800
@@ -10,8 +10,9 @@ STONEWIDTH = 106
 pg.init()
 pg.mixer.init()
 screen = pg.display.set_mode((800, 600))
-background = pg.image.load('background.jpg')
-music = pg.mixer.music.load('KIDS.mp3')
+background = pg.image.load('background.jpg') # аргументом явл строка с путём к файлу изображения
+music = pg.mixer.music.load('sound.mp3')
+pg.mixer.music.play(-1)
 stoneImg = pg.image.load('stone.png')
 enemyImg = pg.image.load('enemy.png')
 bulletImg = pg.image.load('bullet.png')
@@ -89,7 +90,7 @@ while running:
             if event.key == K_RIGHT:
                 stoneX_change = 2  # когда будет зажата и удерживаться правая стрелка
             if event.key == K_SPACE:
-                if bullet_state is 'ready':
+                if bullet_state == 'ready':
                     bulletX = stoneX
                     fire_bullet(bulletX, bulletY)
 
@@ -113,7 +114,7 @@ while running:
     if bulletY <= 0:
         bulletY = 315
         bullet_state = 'ready'
-    if bullet_state is 'fire':
+    if bullet_state == 'fire':
         fire_bullet(bulletX, bulletY)
         bulletY += bulletY_change
     collision = isCollision(enemyX, enemyY, bulletX, bulletY)
